@@ -2,6 +2,7 @@
 #define H_ARRAY
 
 #include <iostream>
+#include <string>
 #include <vector>
 #include <algorithm>
 
@@ -32,6 +33,11 @@ namespace Array {
             , _data(move(array))
             {
             }
+            std::vector<std::vector<T> >&
+            GetData();
+            void Transpose();
+            void Fill(T filler);
+            RawVector<T>& operator[] (size_t t_index);
             void Generate(size_t start, size_t end);
             typename std::vector<RawVector<T> >::const_iterator 
             begin() const;
@@ -41,16 +47,25 @@ namespace Array {
             begin();
             typename std::vector<RawVector<T> >::iterator
             end();
-            Array2d MWProduct(const Array2d& t_term) const;
             std::pair<size_t, size_t> Shape() const;
-            Array2d operator+ (const Array2d& t_term) const;
-            Array2d operator- (const Array2d& t_term) const;
-            Array2d operator* (const Array2d& t_term) const;
-            void operator/ (const T& t_term);
+            Array2d operator+ (Array2d& t_term) const;
+            Array2d operator- (Array2d& t_term) const;
+            Array2d operator* (Array2d& t_term) const;
+            Array2d operator/ (Array2d& t_term) const;
+            Array2d operator/ (T t_term);
+            Array2d operator+ (T t_term);
+            Array2d operator- (T t_term);
+            Array2d operator* (T t_term);
         private:
             std::vector<std::vector<T> > _data;
             std::pair<size_t, size_t> _size;
     };
+
+    template<typename T>
+    Array2d<T> MWProduct(Array2d<T>& left, Array2d<T>& right);
+    std::pair<bool, std::string> CheckShapes(
+        std::pair<size_t, size_t> first,
+        std::pair<size_t, size_t> second);
 
 }; // namespace Arry 
 
